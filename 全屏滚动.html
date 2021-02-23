@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet/less" href="css/scroll.less">
+</head>
+<body>
+<div class="box">
+
+    <input type="radio" name="radio-set" id="nav1" checked>
+    <a href="#section1" class="checked">导航1</a>
+    <input type="radio" name="radio-set" id="nav2">
+    <a href="#section2">导航2</a>
+    <input type="radio" name="radio-set" id="nav3">
+    <a href="#section3">导航3</a>
+    <input type="radio" name="radio-set" id="nav4">
+    <a href="#section4">导航4</a>
+    <div class="container">
+        <div class="section section1" id="section1">
+            第一屏
+        </div>
+        <div class="section section2" id="section2">
+            第二屏
+        </div>
+        <div class="section section3" id="section3">
+            第三屏
+        </div>
+        <div class="section section4" id="section4">
+            第四屏
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+<script src="js/less.js"></script>
+<script>
+    window.onload = function () {
+        let oInput = document.getElementsByTagName("input");
+        let wheel = function (event) {
+            let data = 0;
+            event = event || window.event;
+            if (event.detail) {
+                data = -event.detail / 3;
+            } else if (event.wheelDelta) {
+                data = event.wheelDelta / 120
+            }
+            handle(data);
+        }
+        if (window.addEventListener) {
+            window.addEventListener("DOMMouseScroll", wheel, false)
+        }
+        document.onmousewheel = wheel;
+
+        function handle(data) {
+            let num = 0;
+            for (let i = 0; i < oInput.length; i++) {
+                if (oInput[i].checked) {
+                    num = i;//获取当前的是第几屏
+                    break;
+                }
+            }
+
+            if (data > 0 && num > 0) {
+                //向上滚动
+                oInput[num].checked = false;
+                num--;
+                oInput[num].checked = true;
+
+            } else if (data < 0 && num < 3) {
+                //向下滚动
+                oInput[num].checked = false;
+                num++;
+                oInput[num].checked = true;
+
+            }
+
+        }
+
+
+    }
+</script>
+</html>
